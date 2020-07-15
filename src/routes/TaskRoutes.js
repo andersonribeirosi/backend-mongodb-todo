@@ -8,6 +8,7 @@ const router = express.Router();
 router.post('/', TaskValidation, TaskController.create);
 router.put('/:id', TaskController.update);
 router.get('/:id', TaskController.showTask);
+router.delete('/:id', TaskController.deleteTask);
 router.get('/filter/all', MacAddressValidation, TaskController.all);
 
 module.exports = router;
