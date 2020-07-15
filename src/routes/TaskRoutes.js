@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.post('/', TaskValidation, TaskController.create);
 router.put('/:id', TaskController.update);
+router.get('/:id', TaskController.showTask);
 router.get('/filter/all', MacAddressValidation, TaskController.all);
 
 module.exports = router;
