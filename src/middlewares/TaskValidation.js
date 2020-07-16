@@ -18,9 +18,10 @@ const TaskValidation = async (req, res, next) => {
   } else {
     let exists;
 
+    // Se houver id na requisição
     if (req.params.id) {
       exists = await TaskModel.findOne({
-        _id: { $ne: req.params.id },
+        _id: { $ne: req.params.id }, // $ne ignora o id da requisição, para comparar com as outras tarefas
         when: { $eq: new Date(when) },
         macaddress: { $in: macaddress },
       });
