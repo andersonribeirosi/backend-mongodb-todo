@@ -14,7 +14,8 @@ class TaskController {
   }
 
   async update(req, res) {
-    await TaskModel.findByIdAndUpdate({ _id: req.params.id }, req.body, {
+    // new: true - para devolver os dados da tarefa atualizados
+    await TaskModel.findOneAndUpdate({ _id: req.params.id }, req.body, {
       new: true,
     })
       .then((response) => {
@@ -24,7 +25,7 @@ class TaskController {
         return res.status(500).json(error);
       });
   }
-
+  // Filtrando pelo macaddress - $in (contido na requisição, se não for passado o mac, da erro) ou o $eq - tem a mesma função
   async all(req, res) {
     await TaskModel.find({ macaddress: { $in: req.body.macaddress } })
       .sort('when')
@@ -41,9 +42,8 @@ class TaskController {
       .then((response) => {
         if (response) {
           return res.status(200).json(response);
-        } else {
-          return res.status(404).json({ error: 'Tarefa não encontrada' });
         }
+        return res.status(400).json(response);
       })
       .catch((error) => {
         return res.status(500).json(error);
@@ -51,7 +51,22 @@ class TaskController {
   }
 
   async deleteTask(req, res) {
+    // req.params.id (recupera o id na rota que foi chamada)
     await TaskModel.deleteOne({ _id: req.params.id })
+      .then((response) => {
+        return res.status(200).json(response);
+      })
+      .catch((error) => {
+        return res.status(500).json(error);
+      });
+  }
+
+  async done(req, res) {
+    await TaskModel.findByIdAndUpdate(
+      { _id: req.params.id },
+      { done: req.params.done },
+      { new: true }
+    )
       .then((response) => {
         return res.status(200).json(response);
       })

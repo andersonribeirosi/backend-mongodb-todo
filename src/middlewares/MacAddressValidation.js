@@ -1,4 +1,4 @@
-const MacAddress = (req, res, next) => {
+const MacAddressValidation = (req, res, next) => {
   if (!req.body.macaddress) {
     return res.status(400).json({ error: 'macaddress é obrigatório' });
   } else {
@@ -6,4 +6,4 @@ const MacAddress = (req, res, next) => {
   }
 };
 
-module.exports = MacAddress;
+module.exports = MacAddressValidation;

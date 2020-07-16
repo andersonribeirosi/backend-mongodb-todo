@@ -1,5 +1,5 @@
-const mongoose = require('../config/database');
-const Schema = mongoose.Schema;
+const mongooseConnection = require('../config/database');
+const Schema = mongooseConnection.Schema;
 
 const TaskSchema = new Schema({
   macaddress: { type: String, required: true },
@@ -11,4 +11,4 @@ const TaskSchema = new Schema({
   created: { type: Date, default: Date.now() },
 });
 
-module.exports = mongoose.model('Task', TaskSchema);
+module.exports = mongooseConnection.model('Task', TaskSchema);
