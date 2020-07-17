@@ -12,5 +12,5 @@ server.use('/task', TaskRoutes);
 // });
 
 server.listen(port, () => {
-  console.log('API Started! Escutando na porta: ' + port);
+  console.log('API Started! Escutando em: http://localhost:' + port);
 });

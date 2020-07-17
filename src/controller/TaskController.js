@@ -41,7 +41,7 @@ class TaskController {
   }
   // Filtrando pelo macaddress - $in (contido na requisição, se não for passado o mac, da erro) ou o $eq - tem a mesma função
   async all(req, res) {
-    await TaskModel.find({ macaddress: { $in: req.body.macaddress } })
+    await TaskModel.find({ macaddress: { $in: req.params.macaddress } })
       .sort('when')
       .then((response) => {
         return res.status(200).json(response);
@@ -92,7 +92,7 @@ class TaskController {
   async late(req, res) {
     await TaskModel.find({
       when: { $lt: current }, // $lt verifica se a data e hora são menores ou iguais da hora e data atuais(tarefas atrasadas)
-      macaddress: { $in: req.body.macaddress }, // se o macaddress passado na url esta contido
+      macaddress: { $in: req.params.macaddress }, // se o macaddress passado na url esta contido
     })
       .sort('when')
       .then((response) => {
@@ -105,7 +105,7 @@ class TaskController {
 
   async today(req, res) {
     await TaskModel.find({
-      macaddress: { $in: req.body.macaddress },
+      macaddress: { $in: req.params.macaddress },
       when: { $gte: startOfDay(current), $lt: endOfDay(current) },
     })
       .sort('when')
@@ -119,7 +119,7 @@ class TaskController {
 
   async week(req, res) {
     await TaskModel.find({
-      macaddress: { $in: req.body.macaddress },
+      macaddress: { $in: req.params.macaddress },
       when: { $gte: startOfWeek(current), $lt: endOfWeek(current) },
     })
       .sort('when')
@@ -133,7 +133,7 @@ class TaskController {
 
   async month(req, res) {
     await TaskModel.find({
-      macaddress: { $in: req.body.macaddress },
+      macaddress: { $in: req.params.macaddress },
       when: { $gte: startOfMonth(current), $lt: endOfMonth(current) },
     })
       .sort('when')
@@ -147,7 +147,7 @@ class TaskController {
 
   async year(req, res) {
     await TaskModel.find({
-      macaddress: { $in: req.body.macaddress },
+      macaddress: { $in: req.params.macaddress },
       when: { $gte: startOfYear(current), $lt: endOfYear(current) },
     })
       .sort('when')
